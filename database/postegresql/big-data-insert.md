@@ -6,6 +6,7 @@
 **重点内容:**  
 * 批量导入函数`cursor.executemany(sql, params)`  
   sql为数据库语句, 例: `INSERT INTO 表名 VALUES (%s, %s...)`  
+  `%s`为占位符, 数量根据需要插入的**参数数量**而定  
   params为`list`, list中的一个元素(`list/tuple`)为一组数据,  
   例: params = `[(a, b, c), (a, b, c)]`或者`[[a, b, c], [a, b, c]]`  
 * 只在数据插入**前**, **后**访问数据库. 在数据生成循环中访问数据库会造成  
