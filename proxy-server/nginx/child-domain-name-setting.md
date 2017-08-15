@@ -53,7 +53,7 @@ Nginx 子域名访问设置
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  
 
-                # 长连接用下面两条  
+                # 长连接加上这两条  
                 # proxy_set_header Upgrade $http_upgrade;
                 # proxy_set_header Connection "upgrade";
             }
@@ -67,7 +67,7 @@ Nginx 子域名访问设置
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  
 
-                # 长连接用下面两条  
+                # 长连接加上这两条  
                 # proxy_set_header Upgrade $http_upgrade;
                 # proxy_set_header Connection "upgrade";
             }
