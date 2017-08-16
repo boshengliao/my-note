@@ -23,3 +23,12 @@ issues:
          b = a * 3
          a[0] = 2
          # 输出 b: [2, 2, 3, 2, 2, 3, 2, 2, 3]
+
+2. 函数接收到的 JSON 数据为 unicode 编码, 不能正常使用 key 读取数据.  
+   * 使用 `pip install pyyaml`  
+     
+         import yaml  
+
+         # json_datas = json.dumps(datas) 
+         # 此时 normal_datas 为正常 utf-8 编码
+         normal_datas = yaml.safe_load(json_datas)  
