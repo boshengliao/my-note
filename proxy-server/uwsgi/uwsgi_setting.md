@@ -53,6 +53,9 @@
 
         location / {
             uwsgi_pass ip:port;
+            # 这里还有一种配置. 选择何种方式都需要与 app_uwsgi.ini 文件一样
+            uwsgi_pass unix:/your/path/app.socket;
+
             include uwsgi_params;
 
             proxy_http_version 1.1;
@@ -64,4 +67,8 @@
    * 这里有一个疑问, 当更改 location 的 `/` 为 `/test/` 时, 如何在 flask  
      让 `/test/` 访问 `app.route("/")`.  
      当前情况是浏览器 输入 `/test/`,则会直接去 flask 里寻找对应的 `app.route("/test/")`.  
-     如果没找到, 则 404.
+     如果没找到, 则 404.  
+
+5. 启动 `uwsgi`, 在 `your/path/app_uwsgi.ini` 目录执行:  
+   `uwsgi app_uwsgi.ini`  
+   此时可以去查看 **.log** 文件是否有报错信息.
