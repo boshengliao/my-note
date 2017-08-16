@@ -54,7 +54,7 @@
         location / {
             uwsgi_pass ip:port;
             # 这里还有一种配置. 选择何种方式都需要与 app_uwsgi.ini 文件一样
-            uwsgi_pass unix:/your/path/app.socket;
+            # uwsgi_pass unix:/your/path/app.socket;
 
             include uwsgi_params;
 
