@@ -28,6 +28,9 @@
         # 指定 log 输出到目标位置
         daemonize = /your/app.log
 
+        # 在指定路径下生成 .pid 文件, 用于执行 uwsgi --reload app.pid 类似操作
+        pidfile = /your/path/app.pid
+
         # 请求头大小设置, 默认为 4k , 改为 32k
         buffer-size=32768
 
@@ -68,7 +71,11 @@
      让 `/test/` 访问 `app.route("/")`.  
      当前情况是浏览器 输入 `/test/`,则会直接去 flask 里寻找对应的 `app.route("/test/")`.  
      如果没找到, 则 404.  
+   * 解决上面的问题, [方法](https://stackoverflow.com/questions/18967441/add-a-prefix-to-all-flask-routes)
 
-5. 启动 `uwsgi`, 在 `your/path/app_uwsgi.ini` 目录执行:  
+5. 启动 `uwsgi`, 在 `/your/path/app_uwsgi.ini` 目录执行:  
    `uwsgi app_uwsgi.ini`  
-   此时可以去查看 **.log** 文件是否有报错信息.
+   此时, 可以去查看 **.log** 文件是否有报错信息.  
+
+6. 重启 uswsgi, 在 `/your/path/app.pid` 文件目录, 执行:  
+   `uwsgi --reload app.pid`
