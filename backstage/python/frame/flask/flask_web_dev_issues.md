@@ -9,5 +9,5 @@ issues:
      `app.run(debug=True, threaded=True)`  
 
 2. nginx 中 location 指定 /test 时, 希望跳转到 flask 的 app.route("/").  
-   * [解决文章](https://stackoverflow.com/questions/18967441/add-a-prefix-to-all-flask-routes/36033627#36033627)  
+   * [解决文章](https://stackoverflow.com/questions/18967441/add-a-prefix-to-all-flask-routes)  
    * 内容待添加
