@@ -8,6 +8,19 @@ issues:
    * 启动命令修改:  
      `app.run(debug=True, threaded=True)`  
 
-2. nginx 中 location 指定 /test 时, 希望跳转到 flask 的 app.route("/").  
+2. nginx 中 location 指定 /test/ 时, 希望跳转到 flask 的 app.route("/").  
    * [解决文章](https://stackoverflow.com/questions/18967441/add-a-prefix-to-all-flask-routes)  
-   * 内容待添加  
+
+   * 核心内容:  
+
+            from werkzeug.wsgi import DispatcherMiddleware
+
+            app = Flask(__name__)
+            app.config['APPLICATION_ROOT'] = '/test/'
+
+            def simple(env, resp):
+                resp(b'200 OK', [(b'Content-Type', b'text/plain')])
+                return [b'Hello WSGI World']
+
+            app.wsgi_app = DispatcherMiddleware(simple, {'/test/': app.wsgi_app})
+
