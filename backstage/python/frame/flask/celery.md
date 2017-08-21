@@ -102,13 +102,20 @@
       4. 生成 celery 实例  
       5. 定义 celery 任务函数  
 
-2. 在 task.py 所在目录, 使用 `celery worker -A task.celery -l=info` 来  
+2. 在 flask 的 app.py 中, 也可以通过 `task_func_name.delay(params)` 手动执行 celery 任务:  
+
+        from task import listen_buffer
+
+        # 假设 listen_buffer 函数有参数, 则可以这样手动执行 celery 异步任务
+        listen_buffer.delay(params)
+
+3. 在 task.py 所在目录, 使用 `celery worker -A task.celery -l=info` 来  
    启动 celery worker, 可以添加 `-c 10` 来开启10个 worker 进程.  
 
-3. 在 task.py 所在目录, 使用 `celery beat -A task.celery -l info` 来  
+4. 在 task.py 所在目录, 使用 `celery beat -A task.celery -l info` 来  
    启动 celery beat, 用于**定时**派发**任务**给 worker 执行.
 
-4. 在服务器端, 需要配合 [supervisor](http://blog.csdn.net/michael_lbs/article/details/75407089)
+5. 在服务器端, 需要配合 [supervisor](http://blog.csdn.net/michael_lbs/article/details/75407089)
    来启动 **worker** .  
    我的 celery_worker.conf :  
 
