@@ -109,7 +109,7 @@
         # 假设 listen_buffer 函数有参数, 则可以这样手动执行 celery 异步任务
         listen_buffer.delay(params)
 
-3. 在 task.py 所在目录, 使用 `celery worker -A task.celery -l=info` 来  
+3. 在 task.py 所在目录, 使用 `celery worker -A task.celery -l info` 来  
    启动 celery worker, 可以添加 `-c 10` 来开启10个 worker 进程.  
 
 4. 在 task.py 所在目录, 使用 `celery beat -A task.celery -l info` 来  
