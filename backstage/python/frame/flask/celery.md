@@ -36,7 +36,13 @@
                 },
             }
 
-            CELERY_TIMEZONE = 'UTC'  
+            CELERY_TIMEZONE = 'UTC'
+
+            # 尝试解决 celery worker 如下报错
+            # ContentDisallowed: Refusing to deserialize untrusted content of
+            # type pickle (application/x-python-serialize)
+            CELERY_TASK_SERIALIZER = 'json'
+            CELERY_RESULT_SERIALIZER = 'json'
 
    * 新建 task.py !!!这必须用单独的新文件, 很重要!!  
      此时 base.py, beat\_config.py 和 \__init__.py, 放在新建的 /my\_celery/ 目录下, 且  
