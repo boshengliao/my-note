@@ -148,3 +148,8 @@
             redirect_stderr=true
             stdout_logfile=/var/log/supervisor/celery_beat.log
             environment=PYTHONPATH="$PYTHONPATH:/your/virtualenv/path/your-venv/lib/python2.7/site-packages"
+
+疑问:  
+* 为什么 worker 在服务器端, 执行任务是**无规律间断式**的?  
+  是否跟服务器**单核心**有关?  
+  或者与**启动命令**有关? `celery worker -A task.celery -l info`
