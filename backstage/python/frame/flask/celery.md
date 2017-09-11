@@ -44,9 +44,9 @@
             CELERY_TASK_SERIALIZER = 'json'
             CELERY_RESULT_SERIALIZER = 'json'
 
-   * 新建 task.py !!!这必须用单独的新文件, 很重要!!  
+   * 新建 `tasks.py` !!!这必须用单独的新文件, 很重要!!且 名字只能为 **tasks tasks tasks** !!  
      此时 base.py, beat\_config.py 和 \__init__.py, 放在新建的 /my\_celery/ 目录下, 且  
-     task.py 在项目根目录, **必须**是**单独文件**, task.py:  
+     tasks.py 在项目根目录, **必须**是**单独文件**, tasks.py:  
      
             import yaml
 
@@ -69,7 +69,7 @@
             )
 
             # 生成 celery 实例
-            # 命令行, 用 `celery worker -A task.celery --loglevel=info` 来启动
+            # 命令行, 用 `celery worker -A tasks.celery --loglevel=info` 来启动
             # 在服务器用 supervisor 来保护 celery woker
             celery = make_celery(app)
 
@@ -110,15 +110,15 @@
 
 2. 在 flask 的 app.py 中, 也可以通过 `task_func_name.delay(params)` 手动执行 celery 任务:  
 
-        from task import listen_buffer
+        from tasks import listen_buffer
 
         # 假设 listen_buffer 函数有参数, 则可以这样手动执行 celery 异步任务
         listen_buffer.delay(params)
 
-3. 在 task.py 所在目录, 使用 `celery worker -A task.celery -l info` 来  
+3. 在 tasks.py 所在目录, 使用 `celery worker -A tasks.celery -l info` 来  
    启动 celery worker, 可以添加 `-c 10` 来开启10个 worker 进程.  
 
-4. 在 task.py 所在目录, 使用 `celery beat -A task.celery -l info` 来  
+4. 在 tasks.py 所在目录, 使用 `celery beat -A tasks.celery -l info` 来  
    启动 celery beat, 用于**定时**派发**任务**给 worker 执行.
 
 5. 在服务器端, 需要配合 [supervisor](http://blog.csdn.net/michael_lbs/article/details/75407089)
@@ -128,8 +128,8 @@
             [program:pm_worker]
             # 用 django 则为项目目录. flask 则为虚拟环境中 celery 所在的 venv/bin 目录
             directory=/your/virtualenv/path/your-venv/bin/
-            # 需要运行指令, 代替 `celery worker -A task.celery --loglevel=info` 开启 worker
-            command=celery worker -A task.celery --loglevel=info
+            # 需要运行指令, 代替 `celery worker -A tasks.celery --loglevel=info` 开启 worker
+            command=celery worker -A tasks.celery --loglevel=info
             autorestart=true
             loglevel=info
             redirect_stderr=true
@@ -141,8 +141,8 @@
             [program:pm_beat]
             # 用 django 则为项目目录. flask 则为虚拟环境中 celery 所在的 venv/bin 目录
             directory=/your/virtualenv/path/your-venv/bin/
-            # 需要运行指令, 代替 `celery beat -A task.celery --loglevel=info` 开启 beat
-            command=celery beat -A task.celery --loglevel=info
+            # 需要运行指令, 代替 `celery beat -A tasks.celery --loglevel=info` 开启 beat
+            command=celery beat -A tasks.celery --loglevel=info
             autorestart=true
             loglevel=info
             redirect_stderr=true
@@ -152,4 +152,4 @@
 疑问:  
 * 为什么 worker 在服务器端, 执行任务是**无规律间断式**的?  
   是否跟服务器**单核心**有关?  
-  或者与**启动命令**有关? `celery worker -A task.celery -l info`
+  或者与**启动命令**有关? `celery worker -A tasks.celery -l info`
