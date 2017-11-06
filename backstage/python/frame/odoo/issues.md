@@ -8,3 +8,8 @@
    odoo 启动命令 `python odoo-bin -c odoo.conf/cfg`  
 
 3. **action函数**有问题时, 可以尝试重置数据库.  
+
+4. 创建视图时, **tree** 一定要在第一位, 否则无法看见**数据库的全部信息**  
+   以及**搜索**.  
+   正确设置: `view_mode="tree, form"`  
+   吐槽 odoo **v11.0** 官网的 **build module** 教程简直是烂.  
