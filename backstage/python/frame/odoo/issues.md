@@ -8,3 +8,12 @@
    odoo 启动命令 `python odoo-bin -c odoo.conf/cfg`  
 
 3. **action函数**有问题时, 可以尝试重置数据库.  
+
+4. 创建视图时, **tree** 一定要在第一位, 否则无法看见**数据库的全部信息**  
+   以及**搜索**.  
+   正确设置: `view_mode="tree, form"`  
+   吐槽 odoo **v11.0** 官网的 **build module** 教程简直是烂.  
+
+5. 非 admin 用户, 想要看见其他 module 的菜单, 需要配置 security 中的  
+   **ir.model.access.csv** 文件.  
+   此外, 在上面文件的基础商创建 access rules, 以配置展示信息的规则.  
