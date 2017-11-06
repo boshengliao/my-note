@@ -13,3 +13,7 @@
    以及**搜索**.  
    正确设置: `view_mode="tree, form"`  
    吐槽 odoo **v11.0** 官网的 **build module** 教程简直是烂.  
+
+5. 非 admin 用户, 想要看见其他 module 的菜单, 需要配置 security 中的  
+   **ir.model.access.csv** 文件.  
+   此外, 在上面文件的基础商创建 access rules, 以配置展示信息的规则.  
