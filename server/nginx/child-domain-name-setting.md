@@ -23,6 +23,9 @@ Nginx 子域名访问设置
                 # 长连接加上这两条  
                 # proxy_set_header Upgrade $http_upgrade;
                 # proxy_set_header Connection "upgrade";
+
+                # 设置上传文件大小限制
+                # client_max_body_size 1000m;
             }
 
             location / {
