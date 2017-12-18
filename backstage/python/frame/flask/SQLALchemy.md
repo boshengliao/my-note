@@ -2,7 +2,8 @@
 =  
 
 * 使用 sqlalchemy  
-  [SQLALchemy官网](http://docs.sqlalchemy.org/en/rel_1_1/contents.html)
+  [SQLALchemy官网](http://docs.sqlalchemy.org/en/rel_1_1/contents.html)  
+  * 创建 models.py
 
         from datetime import datetime
 
@@ -44,68 +45,68 @@
             def __repr__(self):
                 return 'username: {}'.format(self.username)
 
-* 数据库初始化  
+  * 数据库初始化  
 
-        # 连接数据库的路径
-        db_addr = ("postgresql+psycopg2://"
-                   "database_username:password@localhost/database_name")
+            # 连接数据库的路径
+            db_addr = ("postgresql+psycopg2://"
+                    "database_username:password@localhost/database_name")
 
-        # 工具类
-        class MyDb(object):
-            def __init__(self):
-                self.engine = create_engine(db_addr)
-                self.sessionmaker = sessionmaker
-                self.Base = Base
-                return
+            # 工具类
+            class MyDb(object):
+                def __init__(self):
+                    self.engine = create_engine(db_addr)
+                    self.sessionmaker = sessionmaker
+                    self.Base = Base
+                    return
 
-            def set_up(self):
-                """
-                    初始化数据库
+                def set_up(self):
+                    """
+                        初始化数据库
 
+                        self.Base.metadata.create_all(self.engine)
+                        解释:
+                            建立表, 对于已存在的表不会进行修改.
+                            当使用 flask-migrate 时, 此条应注释, 通过 migrate, upgrade
+                            建立表.
+                    """
                     self.Base.metadata.create_all(self.engine)
-                    解释:
-                        建立表, 对于已存在的表不会进行修改.
-                        当使用 flask-migrate 时, 此条应注释, 通过 migrate, upgrade
-                        建立表.
-                """
-                self.Base.metadata.create_all(self.engine)
 
-                init_data = self.init_data
-                # 初始化 Group
-                datas = [dict(name='组1'), dict(name='组2')]
-                init_data(Group, datas)
+                    init_data = self.init_data
+                    # 初始化 Group
+                    datas = [dict(name='组1'), dict(name='组2')]
+                    init_data(Group, datas)
 
-                return
+                    return
 
-            def get_session(self):
-                """
-                    拿到 session 用于与数据库通信,
-                    切记要提交 session.commit()
-                    切记要关闭 session.close()
-                """
-                DBSession = self.sessionmaker(bind=self.engine)
+                def get_session(self):
+                    """
+                        拿到 session 用于与数据库通信,
+                        切记要提交 session.commit()
+                        切记要关闭 session.close()
+                    """
+                    DBSession = self.sessionmaker(bind=self.engine)
 
-                session = DBSession()
-                return session
+                    session = DBSession()
+                    return session
 
-            def init_data(self, model_name, datas):
-                """
-                    初始化值, datas = [dict, dict, ...]
-                """
-                s = self.get_session()
+                def init_data(self, model_name, datas):
+                    """
+                        初始化值, datas = [dict, dict, ...]
+                    """
+                    s = self.get_session()
 
-                model_name = model_name
-                datas = datas
-                for data in datas:
-                    old = s.query(model_name).filter_by(**data).first()
-                    t = old is None
-                    if t:
-                        new = model_name(**data)
-                        s.add(new)
+                    model_name = model_name
+                    datas = datas
+                    for data in datas:
+                        old = s.query(model_name).filter_by(**data).first()
+                        t = old is None
+                        if t:
+                            new = model_name(**data)
+                            s.add(new)
 
-                s.commit()
-                s.close()
-                return
+                    s.commit()
+                    s.close()
+                    return
 
 * 使用 flask-migrate  
   [flask-migrate官网](http://flask-migrate.readthedocs.io/en/latest/)  
