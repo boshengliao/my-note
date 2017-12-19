@@ -3,6 +3,12 @@
 
 * 使用 sqlalchemy  
   [SQLALchemy官网](http://docs.sqlalchemy.org/en/rel_1_1/contents.html)  
+  * Note:  
+    1. `session = DBsession()` 一定要记得关闭 `session.close()` 避免  
+      生成无用进程.  
+    2. `session.commit()` 后, 使用 instance.property 之前, 必须重新  
+      载入 instance, `session.refresh(instance)`, 否则报错.  
+
   * 创建 models.py
 
         from datetime import datetime
