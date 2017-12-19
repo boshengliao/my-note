@@ -47,15 +47,23 @@
 
   * 数据库初始化  
 
+            """
+                DBSession = sessionmaker(bind=engine)
+                程序运行过程中, 有且仅建立运行一次. 重复运行会生成无用进程
+
+                session = DBSession(), 生成 session 后, 用完必须关闭, session.close()
+                否则会生成无用的进程
+            """
             # 连接数据库的路径
             db_addr = ("postgresql+psycopg2://"
-                    "database_username:password@localhost/database_name")
+                       "qinziguan:qinziguan@localhost/qinziguan")
+            engine = create_engine(db_addr)
+            DBSession = sessionmaker(bind=engine)
 
             # 工具类
             class MyDb(object):
                 def __init__(self):
-                    self.engine = create_engine(db_addr)
-                    self.sessionmaker = sessionmaker
+                    self.DBSession = DBSession
                     self.Base = Base
                     return
 
@@ -66,10 +74,10 @@
                         self.Base.metadata.create_all(self.engine)
                         解释:
                             建立表, 对于已存在的表不会进行修改.
-                            当使用 flask-migrate 时, 此条应注释, 通过 migrate, upgrade
-                            建立表.
+                            当使用 flask-migrate 时, 此条应注释, 通过 migrate, upgrade 建立表.
+                            见下面 flask-migrate 介绍.
                     """
-                    self.Base.metadata.create_all(self.engine)
+                    # self.Base.metadata.create_all(self.engine)
 
                     init_data = self.init_data
                     # 初始化 Group
@@ -84,9 +92,7 @@
                         切记要提交 session.commit()
                         切记要关闭 session.close()
                     """
-                    DBSession = self.sessionmaker(bind=self.engine)
-
-                    session = DBSession()
+                    session = self.DBSession()
                     return session
 
                 def init_data(self, model_name, datas):
