@@ -33,9 +33,8 @@
             phone = Column('手机', String(250))
             email = Column('邮件', String(250))
 
-            ＃ 浮点数的设置. asdecimal=True 显示小数位．
             ＃ decimal_return_scale=1 显示小数的位数．
-            balance = Column('目标金额', Float(asdecimal=True, decimal_return_scale=1), default=0)
+            balance = Column('目标金额', Float(decimal_return_scale=1), default=0)
 
 
             # 建立外键
