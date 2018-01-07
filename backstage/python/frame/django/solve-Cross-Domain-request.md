@@ -53,3 +53,15 @@
   'from django.views.decorators.csrf import csrf_exempt' 取消csrftoken验证.  
   然后在函数定义**前**加上装饰器 '@csrf_exempt', 即可解决表单验证.  
 
+* 在使用 django-restful 时, 需要在 project/setting.py 加上:  
+
+      REST_FRAMEWORK = {
+          'DEFAULT_AUTHENTICATION_CLASSES': (
+              'rest_framework.authentication.TokenAuthentication',
+          ),
+          'DEFAULT_PERMISSION_CLASSES': (
+              'rest_framework.permissions.AllowAny',
+          ),
+      }
+
+  [官网解释 http://www.django-rest-framework.org/api-guide/permissions/](http://www.django-rest-framework.org/api-guide/permissions/)
