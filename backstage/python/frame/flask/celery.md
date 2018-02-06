@@ -126,10 +126,15 @@
    我的 celery_worker.conf :  
 
             [program:pm_worker]
-            # 用 django 则为项目目录. flask 则为虚拟环境中 celery 所在的 venv/bin 目录
-            directory=/your/virtualenv/path/your-venv/bin/
-            # 需要运行指令, 代替 `celery worker -A tasks.celery --loglevel=info` 开启 worker
-            command=celery worker -A tasks.celery --loglevel=info
+            # django config:
+            directory=/your/django/proj/path
+            command=python manage.py celery worker -l info
+
+            # flask config:
+            # 需要运行指令, 代替 `celery worker -A tasks.celery -l info` 开启 worker
+            directory=/your/proj/tasks/path
+            command=/your/virtualenv/path/your-venv/bin/celery worker -A tasks.celery -l info
+
             autorestart=true
             loglevel=info
             redirect_stderr=true
@@ -139,10 +144,15 @@
    我的 celery_beat.conf :  
 
             [program:pm_beat]
-            # 用 django 则为项目目录. flask 则为虚拟环境中 celery 所在的 venv/bin 目录
-            directory=/your/virtualenv/path/your-venv/bin/
-            # 需要运行指令, 代替 `celery beat -A tasks.celery --loglevel=info` 开启 beat
-            command=celery beat -A tasks.celery --loglevel=info
+            # django config:
+            directory=/your/django/proj/path
+            command=python manage.py celery beat -l info
+
+            # flask config:
+            # 需要运行指令, 代替 `celery beat -A tasks.celery -l info` 开启 beat
+            directory=/your/proj/tasks/path
+            command=/your/virtualenv/path/your-venv/bin/celery beat -A tasks.celery -l info
+
             autorestart=true
             loglevel=info
             redirect_stderr=true
