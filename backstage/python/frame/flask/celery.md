@@ -162,4 +162,28 @@
 疑问:  
 * 为什么 worker 在服务器端, 执行任务是**无规律间断式**的?  
   是否跟服务器**单核心**有关?  
-  或者与**启动命令**有关? `celery worker -A tasks.celery -l info`
+  或者与**启动命令**有关? `celery worker -A tasks.celery -l info`  
+
+* 在 django 项目使用 `django-celery`
+  1.  在 setting.py 中有如下配置:  
+
+            import djcelery
+
+            djcelery.setup_loader()
+            BROKER_URL = 'redis://localhost:6379/0'
+            CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+            CELERY_TIMEZONE = TIME_ZONE
+            CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+            CELERY_TASK_SERIALIZER = 'json'
+            CELERY_RESULT_SERIALIZER = 'json'
+
+  2. 在 tasks.py 中有如下配置:  
+
+            from celery import task, platforms
+
+            platforms.C_FORCE_ROOT = True
+
+            @task(name='your_task_name')
+            def your_task_name():
+                ...
+                return None
