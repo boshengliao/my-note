@@ -8,3 +8,22 @@
     templateUrl: function() {
         return 'partials/app-mainsec.html?' + new Date();
     }
+
+* 方法2:
+  [参考 http://blog.csdn.net/u010039979/article/details/54376856](http://blog.csdn.net/u010039979/article/details/54376856)  
+
+  代码:  
+
+        app.config(['$httpProvider', '...'], function($httpProvider, ...){
+            var theHeaders = $httpProvider.defaults.headers
+            if (!theHeaders.get) {
+                theHeaders.get = {}
+            }
+            else {
+                theHeaders.common['X-Requested-With'] = 'XMLHttpRequest'
+                theHeaders.get['Cache-Control'] = 'no-cache'
+                theHeaders.get['Pragma'] = 'no-cache'
+            }
+
+            ...
+        })
