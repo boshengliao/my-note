@@ -6,5 +6,5 @@
 代码:  
 
     templateUrl: function() {
-        return 'partials/app-mainsec.html?' + +new Date();
+        return 'partials/app-mainsec.html?' + new Date();
     }
