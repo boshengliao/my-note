@@ -36,36 +36,67 @@
        2. 'w' 为重新创建文件并加入一行.
     * `format` 日志输出的格式.
     * `level` 日志输出的级别.
+    * ***重要*** 如果直接配置可能会导致框架logging被替换. 如Flask.  
+      因为默认`logging.getLogger('werkzeug')`
 
 2. 我的**log_cfg.py**:  
 
         #!/usr/bin/env python
         # -*- coding: utf-8 -*-
 
-        from __future__ import unicode_literals
-
-        import datetime
         import logging
-
-        # 输入log等级, 可填入DEBUG, INFO, WARNING, ERROR, CRITICAL
-        logging.basicConfig(level=logging.ERROR)
+        import os
 
 
-        def log(message, level='info'):
-            """打印 log 信息.
-
-            :param message: 需要打印的信息.  
-            :param level: 打印信息的等级. 可填入:
-                'debug', 'info', 'warning', 'error', 'critical'.
+        class Log(object):
+            """配置logging
             """
-            # 检查
-            cfg = ['debug', 'info', 'warning', 'error', 'critical']
-            if level not in cfg:
-                level = 'info'
-            t = datetime.datetime.now()
-            date_time = t.strftime('%Y-%m-%d %H:%M:%S')
-            msg = '{}: {}'.format(date_time, message)
-            # get func
-            f = getattr(logging, level)
-            f(msg)
-            return None
+            def __init__(self, proj_name='analysis_log'):
+                # 检查项目log目录
+                self._check_proj(proj_name)
+                # 配置基础变量
+                name = proj_name
+                log_name = '{}/{}_error.log'.format(proj_name, proj_name)
+                level = logging.INFO
+                FORMAT = ('%(asctime)s-%(name)s-%(levelname)s: %(message)s')    
+                # 生产logger实例
+                logger = logging.getLogger(name)
+                # 判断logger是否存在
+                t = logger.handlers
+                if len(t) != 0:
+                    self.logger = logger
+                    return None
+
+                formatter = logging.Formatter(FORMAT)
+                logger.setLevel(level=level)
+                # 构造file
+                handler = logging.FileHandler(log_name)
+                handler.setLevel(level)
+                handler.setFormatter(formatter)
+                logger.addHandler(handler)
+                # 构造stream
+                # console = logging.StreamHandler()
+                # console.setLevel(level)
+                # console.setFormatter(formatter)
+                # logger.addHandler(console)
+
+                self.logger = logger
+                return None
+
+            def log(self, message, exc_info=True):
+                """输出信息
+                """
+                self.logger.error(message, exc_info=exc_info)
+                return None
+
+            def _check_proj(self, proj_name):
+                """检查项目文件夹是否存在. 不存在, 则创建
+                """
+                t = os.path.exists(proj_name)
+                if not t:
+                    os.mkdir(proj_name)
+                return None
+
+    参考资料:  
+    * [https://www.cnblogs.com/liujiacai/p/7804848.html](https://www.cnblogs.com/liujiacai/p/7804848.html)
+    * [https://blog.csdn.net/seanb/article/details/52608235](https://blog.csdn.net/seanb/article/details/52608235)
