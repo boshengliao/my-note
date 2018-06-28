@@ -2,6 +2,8 @@
 =  
 
 [参考文章(含安装、删除、恢复引导)](http://blog.csdn.net/michael_lbs/article/details/63251850)  
+[ubuntu引导修复](https://blog.csdn.net/hp_satan/article/details/9331411)  
+重点`set prefix`后, 直接 `insmod normal`
 
 安装ubuntu:  
   1. 在[ubuntu官网](https://www.ubuntu.com/download/alternative-downloads)
