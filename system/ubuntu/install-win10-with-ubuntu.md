@@ -1,6 +1,18 @@
 在win10的基础上安装Ubuntu
 =  
 
+**UEFI模式**  
+
+1. 安装双系统：  
+   * [https://jingyan.baidu.com/article/e3c78d6460e6893c4c85f5b1.html](https://jingyan.baidu.com/article/e3c78d6460e6893c4c85f5b1.html)  
+   * [https://blog.csdn.net/baobei0112/article/details/77996570](https://blog.csdn.net/baobei0112/article/details/77996570)  
+   * [https://blog.csdn.net/zhhhua321/article/details/77163290](https://blog.csdn.net/zhhhua321/article/details/77163290)  
+2. 修复引导：  
+   * [https://jingyan.baidu.com/article/6079ad0eae46b128fe86db56.html](https://jingyan.baidu.com/article/6079ad0eae46b128fe86db56.html)  
+   * [https://blog.csdn.net/zhhhua321/article/details/77163290](https://blog.csdn.net/zhhhua321/article/details/77163290)  
+
+***
+
 [参考文章(含安装、删除、恢复引导)](http://blog.csdn.net/michael_lbs/article/details/63251850)  
 [ubuntu引导修复](https://blog.csdn.net/hp_satan/article/details/9331411)  
 重点`set prefix`后, 直接 `insmod normal`
