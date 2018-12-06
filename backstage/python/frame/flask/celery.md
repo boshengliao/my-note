@@ -44,6 +44,18 @@
             CELERY_TASK_SERIALIZER = 'json'
             CELERY_RESULT_SERIALIZER = 'json'
 
+            # 配置多队列
+            CELERY_QUEUES = (
+                Queue("default", Exchange("default"), routing_key="default"),
+                Queue("for_task_A", Exchange("for_task_A"), routing_key="task_a"),
+                Queue("for_task_B", Exchange("for_task_B"), routing_key="task_a"),
+            )
+            # 为指定task分配指定的队列, 未分配队列的task默认队列为`celery`
+            CELERY_ROUTES = {
+                'app.tasks.add': {"queue": "for_task_A", "routing_key": "task_a"},
+                'sleep_func': {"queue": "for_task_B", "routing_key": "task_b"},
+            }
+
    * 新建 `tasks.py` !!!这必须用单独的新文件, 很重要!!且 名字只能为 **tasks tasks tasks** !!  
      此时 base.py, beat\_config.py 和 \__init__.py, 放在新建的 /my\_celery/ 目录下, 且  
      tasks.py 在项目根目录, **必须**是**单独文件**, tasks.py:  
