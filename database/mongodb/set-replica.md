@@ -72,6 +72,16 @@
     * `rs.add("ip/hostname:port")`
     * `rs.remove("ip/hostname:port")`  
 
+* 使用 mongoengine 连接副本集:  
+
+        from mongoengine import connect
+
+        ip = '172.17.0.1'
+        uri = 'mongodb://{ip}:27020,{ip}:27021,{ip}:27022/test'.format(ip=ip)
+        # uri = 'mongodb://{ip}:27020,{ip}:27021,{ip}:27022/test?replicaSet=rs0'.format(ip=ip)
+        connect(host=uri, replicaset='rs0')
+
+
 参考:  
 [官网](https://docs.mongodb.com/manual/replication/)  
 [mongoDB系列之（二）：mongoDB 副本集](https://www.cnblogs.com/ee900222/p/mongodb_2.html)
