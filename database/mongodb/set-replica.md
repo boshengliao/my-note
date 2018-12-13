@@ -4,7 +4,7 @@
 * 启动mongo, 并设置副本集名称  
     * 命令行 `mongod -f /etc/mongod.conf --bind_ip 0.0.0.0 --port 27022 --replSet rs0`  
         * `--replSet rs0`很重要, 所有用作构建副本集的mongo服务均需有该参数.  
-        * 可在配置文件 mongod.conf 里设置 参数`replication: rs0`是同样效果.  
+        * 可在配置文件 mongod.conf 里设置 参数`replSetName: rs0`是同样效果.  
 
     * 配置--mongod.conf:
 
@@ -43,6 +43,7 @@
             #operationProfiling:
 
             #replication:
+            #    replSetName: rs0
 
             #sharding:
 
