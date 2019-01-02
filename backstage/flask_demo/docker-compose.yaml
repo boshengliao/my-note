@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  gv_api:
+    container_name: app_container_name
+    hostname: your_hostname
+    image: your_image:latest
+    ports:
+    - 5000:5000
+    volumes:
+    - $PWD:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.app
+
+    # command: gunicorn -c gun.py app:app
+    command: flask run --host=0.0.0.0 --port=5000
