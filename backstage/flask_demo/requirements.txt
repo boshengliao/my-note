@@ -5,7 +5,7 @@ Flask==1.0.2
 Jinja2==2.10
 MarkupSafe==1.1.0
 PyJWT==1.7.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 aliyun-python-sdk-core-v3==2.11.2
 aliyun-python-sdk-kms==2.5.0
 amqp==2.3.2
